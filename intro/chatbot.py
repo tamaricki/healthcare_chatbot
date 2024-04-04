@@ -98,3 +98,77 @@ q='Did anyone had a positive experience? '
 
 review_chain.invoke({'context': c, 'question':q})
 # %%
+#BELOW IS TEST RETRIEVER
+
+
+#%%
+#chromadb is vector DB it is similar to AstraDB(DataStax) except DataStax offers db as a service
+
+#now we are building retriever, we will use reviews csv
+
+from langchain.document_loaders.csv_loader import CSVLoader
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+import os
+
+review_path = "../data/reviews.csv"
+
+#this is folder where vectordb sill store data, if I add relative path then it takes venv location (check notes)
+reviews_chroma_path = os.path.expanduser('~') + "/chroma"
+
+# %%
+loader = CSVLoader(file_path=review_path, source_column='review')
+
+reviews = loader.load()
+#print(reviews)
+
+reviews_vector_db= Chroma.from_documents(reviews, OpenAIEmbeddings(), persist_directory=reviews_chroma_path)
+
+q=""" Has anyone complained about communication with the hospital staff?"""
+
+relevant_docs = reviews_vector_db.similarity_search(q, k=3)
+
+
+# %%
+
+#next step is to add reviews retriever to review_chain so that relevant reviews are passed to prompt as context 
+
+from langchain.schema.runnable import RunnablePassthrough
+
+review_retriever=reviews_vector_db.as_retriever(k=10)
+
+review_chain= ({'context': review_retriever, 'question': RunnablePassthrough()} | review_prompt_template | chat_model |out_parser)
+
+#%%
+#And this is patient review chain retriever 
+review_chain.invoke(q)
+
+#now we want to equipt chat to answer questions about other things related to healthcare , so we are distinguishing here
+#questions about waiting times and questions related to patient reviews 
+#%%
+
+# waiting times will be in the tools where we create function which produces random times, depending on the type of surgery
+#data are from OECD.stats 
+
+
+
+
+
+
+
+
+#%%
+
+#SANDBOX
+import os
+current_location=os.getcwd()
+#current_location
+#relevant_docs[0].page_content
+#with open(review_path, 'r') as f:
+#        text=f.readlines()
+c= os.path.abspath(os.path.sep)
+h = os.path.expanduser('~')+'/chroma'
+h
+
+#text
+# %%
