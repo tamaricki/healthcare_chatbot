@@ -7,8 +7,9 @@ import pandas as pd
 import numpy as np
 from requests.exceptions import MissingSchema
 #%%
-
-url= 'https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/.WAIT_MEAN.............WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'
+#EXAMPLE of OECD API Query. We want to be able to select medical procedure and country and calculate average waiting time
+# from specialist assessment to treatment. Data used is from period between 2018 and 2022
+url_no_country= 'https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/.WAIT_MEAN.............WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'
 
 #below example for Denmark only, average waiting time, only for hip replacement procedure, 
 # for data starting from 2018, and with json data format
@@ -17,38 +18,18 @@ url_dnk='https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_W
 #to add countries (estonia, denmark example,startPeriod=2018)
 #https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/EST+DNK.WAIT_MEAN.............WTSP...?dimensionAtObservation=AllDimensions
 
-response = requests.get(url_dnk)
-response=response.json()
-
-# %%
-vals=[]
-from_api=response['data']['dataSets'][-1]['observations']
-for v in from_api.values():
-    vals.append(float(v[0]))
-r = sum(vals)/len(vals)
-print(vals, r)
-
-
-# %%
-
-dots='.............'
-len(dots)
-p = '..CM8151_8153...........'
-print(len(dots), len(p))
-#df_from_api=pd.DataFrame.from_records(from_api)
-
 
 #%%
+#This is just to get unique values of countries and medical procedures 
 data = pd.read_csv('OECD_waiting_time.csv')
-
-data.info()
-# %%
 #procedure_name=data['Medical procedure'].unique()
 procedure_id = data['MEDICAL_PROCEDURE'].unique()
 country_name = data['Reference area'].unique()
 country_code = data['REF_AREA'].unique()
 
+#medical prcedure names are long, therefore we will rename it 
 pro_name=np.array(['Artery bypass', 'Hip replacement', 'Hysterectomy', 'Knee replacement', 'Prostatectomy', 'Cataract surgery'])
+#making country names lowercase 
 c_names = [c.lower() for c in country_name]
 country_pairs=list(zip(c_names, country_code))
 procedure_pairs=list(zip(pro_name, procedure_id))
@@ -68,8 +49,6 @@ def get_waiting_time_country_procedure(procedure=str, country=None) -> int | str
     for pro in procedure_pairs:
         if pro[0]==procedure:
             pro_code= pro[1]
-
-
     if not country:
         #return url containing only procedure
         url= 'https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/.WAIT_MEAN..{}...........WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'.format(pro_code)
@@ -99,13 +78,4 @@ def get_waiting_time_country_procedure(procedure=str, country=None) -> int | str
 #there are lot of duplicate columns so we need to reduce 
 
 get_waiting_time_country_procedure('Hysterectomy', 'Costa Rica')
-# %%
-procedure= 'Hip replacement'
-pro_code=''
-for pro in procedure_pairs:
-    if pro[0]==procedure:
-        pro_code= pro[1]
-print(pro_code)
-url='https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/.WAIT_MEAN..{}...........WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'.format(pro_code)
-url
 # %%
