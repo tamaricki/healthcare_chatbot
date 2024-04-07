@@ -21,33 +21,35 @@ url_dnk='https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_W
 
 #%%
 #This is just to get unique values of countries and medical procedures 
-data = pd.read_csv('OECD_waiting_time.csv')
+#data = pd.read_csv('OECD_waiting_time.csv')
 #procedure_name=data['Medical procedure'].unique()
-procedure_id = data['MEDICAL_PROCEDURE'].unique()
-country_name = data['Reference area'].unique()
-country_code = data['REF_AREA'].unique()
+#procedure_id = data['MEDICAL_PROCEDURE'].unique()
+#country_name = data['Reference area'].unique()
+#country_code = data['REF_AREA'].unique()
 
 #medical prcedure names are long, therefore we will rename it 
 pro_name=np.array(['Artery bypass', 'Hip replacement', 'Hysterectomy', 'Knee replacement', 'Prostatectomy', 'Cataract surgery'])
 #making country names lowercase 
-c_names = [c.lower() for c in country_name]
-country_pairs=list(zip(c_names, country_code))
-procedure_pairs=list(zip(pro_name, procedure_id))
+#c_names = [c.lower() for c in country_name]
+#country_pairs=list(zip(c_names, country_code))
+#procedure_pairs=list(zip(pro_name, procedure_id))
 #%%
-print(procedure_pairs, '\n', country_pairs)
+
 #country_pairs
 
-procedure_pairs1=[('Artery bypass', 'CM361'), ('Hip replacement', 'CM8151_8153'), ('Hysterectomy', 'CM683_687_689'), ('Knee replacement', 'CM8154'), ('Prostatectomy', 'CM603_606'), ('Cataract surgery', 'CM36_TRS')]
-country_pairs1=[('chile', 'CHL'), ('costa rica', 'CRI'), ('poland', 'POL'), ('finland', 'FIN'), ('new zealand', 'NZL'), ('united kingdom', 'GBR'), ('netherlands', 'NLD'), ('denmark', 'DNK'), ('italy', 'ITA'), ('hungary', 'HUN'), ('australia', 'AUS'), ('estonia', 'EST'), ('spain', 'ESP'), ('israel', 'ISR'), ('portugal', 'PRT'), ('sweden', 'SWE'), ('norway', 'NOR'), ('lithuania', 'LTU')]
+procedure_pairs=[('Artery bypass', 'CM361'), ('Hip replacement', 'CM8151_8153'), ('Hysterectomy', 'CM683_687_689'), ('Knee replacement', 'CM8154'), ('Prostatectomy', 'CM603_606'), ('Cataract surgery', 'CM36_TRS')]
+country_pairs=[('chile', 'CHL'), ('costa rica', 'CRI'), ('poland', 'POL'), ('finland', 'FIN'), ('new zealand', 'NZL'), ('united kingdom', 'GBR'), ('netherlands', 'NLD'), ('denmark', 'DNK'), ('italy', 'ITA'), ('hungary', 'HUN'), ('australia', 'AUS'), ('estonia', 'EST'), ('spain', 'ESP'), ('portugal', 'PRT'), ('sweden', 'SWE'), ('norway', 'NOR'), ('lithuania', 'LTU')]
 
 # %%
 def get_waiting_time_country_procedure(procedure=str, country=None) -> int | str: 
     result=''
     url=''
     vals=[]
+    procedure_pairs=[('Artery bypass', 'CM361'), ('Hip replacement', 'CM8151_8153'), ('Hysterectomy', 'CM683_687_689'), ('Knee replacement', 'CM8154'), ('Prostatectomy', 'CM603_606'), ('Cataract surgery', 'CM36_TRS')]
+    country_pairs=[('chile', 'CHL'), ('costa rica', 'CRI'), ('poland', 'POL'), ('finland', 'FIN'), ('new zealand', 'NZL'), ('united kingdom', 'GBR'), ('netherlands', 'NLD'), ('denmark', 'DNK'), ('italy', 'ITA'), ('hungary', 'HUN'), ('australia', 'AUS'), ('estonia', 'EST'), ('spain', 'ESP'), ('portugal', 'PRT'), ('sweden', 'SWE'), ('norway', 'NOR'), ('lithuania', 'LTU')]
     pro_code=''
     for pro in procedure_pairs:
-        if pro[0]==procedure:
+        if pro[0].lower()==procedure.lower():
             pro_code= pro[1]
     if not country:
         #return url containing only procedure
@@ -60,22 +62,22 @@ def get_waiting_time_country_procedure(procedure=str, country=None) -> int | str
                 country_code=c[1]
                 url = 'https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/{}.WAIT_MEAN..{}...........WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'.format(country_code, pro_code)
 
-    print(url)
+    #print(url)
     try:
         response = requests.get(url)
         response = response.json()
         extract_vals =response['data']['dataSets'][-1]['observations']
         vals=[float(val[0]) for val in extract_vals.values()]
-        print(vals)
+        #print(vals)
         result = sum(vals)/len(vals)
     except MissingSchema:
         result = 'URL is incorrect. Please check spelling or if country you entered is part of our database'
+    #we need to round up the number since days cannot be in decimals 
     return result
 
 
 
-# %%
-#there are lot of duplicate columns so we need to reduce 
 
-get_waiting_time_country_procedure('Hysterectomy', 'Costa Rica')
+# %%
+get_waiting_time_country_procedure('Knee replacement', 'sweden')
 # %%
