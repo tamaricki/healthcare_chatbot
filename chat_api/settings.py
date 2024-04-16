@@ -19,7 +19,8 @@ def load_env_vars(root_dir: Union[str, Path]) -> dict:
     load_dotenv(dotenv_path = root_dir / ".env", override=True)
 
     return dict(os.environ)
-
+    
+#we go back two level to get .env file
 def get_root_dir(default_value: str='..') -> Path:
     return Path(os.getenv("ML_PIPELINE_ROOT_DIR", default_value))
 
