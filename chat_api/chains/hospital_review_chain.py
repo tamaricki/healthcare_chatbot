@@ -1,4 +1,4 @@
-#%%
+
 from langchain.vectorstores.neo4j_vector import Neo4jVector
 from langchain_openai import OpenAIEmbeddings
 from langchain.chains import RetrievalQA
@@ -8,7 +8,6 @@ import os
 import settings as s 
 
 
-#%%
 HOSPITAL_QA_MODEL = s.SETTINGS['HOSPITAL_QA_MODEL']
 uri = s.SETTINGS['NEO4J_URI']
 uri1 = os.getenv('NEO4J_URI')
@@ -37,7 +36,7 @@ review_human_prompt= HumanMessagePromptTemplate(prompt=PromptTemplate(input_vari
 messages=[review_system_prompt, review_human_prompt]
 
 review_prompt=ChatPromptTemplate(input_variables=['context', 'question'], messages=messages)
-
+#this will be used by agent 
 reviews_vector_chain=RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0),
                     chain_type='stuff', retriever=neo4j_vector_index.as_retriever(k=12))
 #stuff is telling to chain to pass all 12 reviews to the prompt
@@ -45,19 +44,16 @@ reviews_vector_chain=RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0),
 reviews_vector_chain.combine_documents_chain.llm_chain.prompt=review_prompt
 
 
-#%%
 #testing 
-query="""What have patients said about hospital efficiency? Mention details from specific reviews."""
+#query="""What have patients said about hospital efficiency? Mention details from specific reviews."""
 
-response=reviews_vector_chain.invoke(query)
+#response=reviews_vector_chain.invoke(query)
 
-response.get('result')
+#response.get('result')
 
 
+#q1="""What have patients said about hospital environment?"""
 
-# %%
-q1="""What have patients said about hospital environment?"""
+#r1= reviews_vector_chain.invoke(q1)
+#r1.get('result')
 
-r1= reviews_vector_chain.invoke(q1)
-r1.get('result')
-# %%

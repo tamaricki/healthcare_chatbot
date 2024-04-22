@@ -7,6 +7,7 @@ import numpy as np
 from requests.exceptions import MissingSchema
 from langchain_community.graphs import Neo4jGraph
 import settings as s
+from typing import Any
 
 
 
@@ -103,7 +104,7 @@ def get_current_wait_times(hospital: str) ->str:
         return f"{minutes} minutes"
 
 
-def get_most_available_hospital() -> dict[str, float]:
+def get_most_available_hospital(_:Any) -> dict[str, float]:
     current_hospitals=_get_current_hospitals()
 
     current_wait_time = [_get_current_wait_times_minutes(h) for h in current_hospitals]

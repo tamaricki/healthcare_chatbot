@@ -1,5 +1,4 @@
 
-#%%
 
 from langchain_community.graphs import Neo4jGraph
 from langchain.chains import GraphCypherQAChain
@@ -14,7 +13,7 @@ HOSPITAL_CYPHER_MODEL=s.SETTINGS['HOSPITAL_CYPHER_MODEL']
 graph=Neo4jGraph(url=s.SETTINGS['NEO4J_URI'],username=s.SETTINGS['NEO4J_USERNAME'], password=s.SETTINGS['NEO4J_PASSWORD'])
 
 graph.refresh_schema()
-
+#one-shot prompting (providing examples and then asking to perform)
 cypher_generation_template=""" 
 Task:
 Generate Cypher query for a Neo4j graph database.
@@ -114,31 +113,29 @@ a way that isn't ambiguous and allows someone to tell what the full
 names are.
 Never say you don't have the right information if there is data in
 the query results. Always use the data in the query results.
-Helpful Answer:
+Helpful Answer: 
 
 """
 
 qa_generation_prompt= PromptTemplate(input_variables=["context", "question"], template=qa_template)
-
+#this will be used by the agent 
 hospital_cypher_chain=GraphCypherQAChain.from_llm(cypher_llm=ChatOpenAI(model=HOSPITAL_CYPHER_MODEL), 
                         qa_llm=ChatOpenAI(model=HOSPITAL_QA_MODEL), graph= graph, verbose=True,
                         qa_prompt=qa_generation_prompt, cypher_prompt=cypher_generation_prompt,
                         validate_cypher=True, top_k=100)
-# %%
+
 
 #test
 
-question = """What is the average visit duration for emergency visits in North Carolina?"""
+#question = """What is the average visit duration for emergency visits in North Carolina?"""
 
-r=hospital_cypher_chain.invoke(question)
+#r=hospital_cypher_chain.invoke(question)
 
-# %%
-q1 = """ How much was billed for patient 789's stay? """
 
-r1= hospital_cypher_chain.invoke(q1)
+#q1 = """ How much was billed for patient 789's stay? """
 
-# %%
-q2= """ List all hospital names which we have in our records."""
+#r1= hospital_cypher_chain.invoke(q1)
 
-r2 = hospital_cypher_chain.invoke(q2)
-# %%
+#q2= """ List all hospital names which we have in our records."""
+
+#r2 = hospital_cypher_chain.invoke(q2)
