@@ -1,14 +1,14 @@
 ### in this file we are contacint OECD API service to pull data 
 
-
 import requests
 import json
 import pandas as pd
 import numpy as np
 from requests.exceptions import MissingSchema
-import os
-from typing import Any
 from langchain_community.graphs import Neo4jGraph
+import settings as s
+
+
 
 
 #EXAMPLE of OECD API Query. We want to be able to select medical procedure and country and calculate average waiting time
@@ -30,6 +30,7 @@ pro_name=np.array(['Artery bypass', 'Hip replacement', 'Hysterectomy', 'Knee rep
 
 procedure_pairs=[('Artery bypass', 'CM361'), ('Hip replacement', 'CM8151_8153'), ('Hysterectomy', 'CM683_687_689'), ('Knee replacement', 'CM8154'), ('Prostatectomy', 'CM603_606'), ('Cataract surgery', 'CM36_TRS')]
 country_pairs=[('chile', 'CHL'), ('costa rica', 'CRI'), ('poland', 'POL'), ('finland', 'FIN'), ('new zealand', 'NZL'), ('united kingdom', 'GBR'), ('netherlands', 'NLD'), ('denmark', 'DNK'), ('italy', 'ITA'), ('hungary', 'HUN'), ('australia', 'AUS'), ('estonia', 'EST'), ('spain', 'ESP'), ('portugal', 'PRT'), ('sweden', 'SWE'), ('norway', 'NOR'), ('lithuania', 'LTU')]
+#%%
 
 def get_waiting_time_country_procedure(procedure=str, country=None) -> int | str: 
     result=''
@@ -61,10 +62,64 @@ def get_waiting_time_country_procedure(procedure=str, country=None) -> int | str
         #print(vals)
         result = sum(vals)/len(vals)
     except MissingSchema:
-        result = 'URL is incorrect. Please check spelling or if country you entered is part of our database'
+        print('URL is incorrect. Please check spelling or if country you entered is part of our database')
+        result=0.0
+    except json.decoder.JSONDecodeError:
     #we need to round up the number since days cannot be in decimals 
-    return result
+        print(f"There is no available data for {country}")
+        result = 0.0
+    return f"{round(result,0)} days"
 
 
 
+def _get_current_hospitals() ->list[str]:
+    graph = Neo4jGraph(url=s.SETTINGS["NEO4J_URI"], username=s.SETTINGS["NEO4J_USERNAME"], password=s.SETTINGS["NEO4J_PASSWORD"])
+
+    current_hospitals = graph.query(""" MATCH (h:Hospital)
+                                    RETURN h.name AS hospital_name
+                                     """)
+
+    return [h['hospital_name'].lower() for h in current_hospitals]
+
+
+
+def _get_current_wait_times_minutes(hospital):
+    current_hospitals =_get_current_hospitals()
+    if hospital.lower() not in current_hospitals:
+        return -1
+    return np.random.randint(0, 600)
+
+
+def get_current_wait_times(hospital: str) ->str:
+    wait_time = _get_current_wait_times_minutes(hospital)
+    if wait_time==-1:
+        return f"{hospital} does not exists"
+
+    hours, minutes = divmod(wait_time, 60)
+
+    if hours>0:
+        return f"{hours} hours and {minutes} minutes"
+    else:
+        return f"{minutes} minutes"
+
+
+def get_most_available_hospital() -> dict[str, float]:
+    current_hospitals=_get_current_hospitals()
+
+    current_wait_time = [_get_current_wait_times_minutes(h) for h in current_hospitals]
+
+    best_idx = np.argmin(current_wait_time)
+    best_hospital = current_hospitals[best_idx]
+    best_wait_time = current_wait_time[best_idx]
+
+    return {best_hospital: best_wait_time}
+
+#test
+#get_current_wait_times('fake hospital')
+
+
+
+#get_waiting_time_country_procedure('knee replacement', 'poland')
+
+#get_most_available_hospital()
 
