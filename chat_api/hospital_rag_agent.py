@@ -81,10 +81,16 @@ hospital_rag_agent_executor=AgentExecutor(agent=hospital_rag_agent, tools=tools,
 
 #r2=hospital_rag_agent_executor.invoke({"input":"What is current waiting time for artery bypass in New Zealand?"})
 
-
 #r3=hospital_rag_agent_executor.invoke({"input":"Which hospital has the shortest wait time?"}) #pay attention to Any input 
 
 #r4= hospital_rag_agent_executor.invoke({"input": "What's the average billing amount for emergency visits by hospital?"})
 
-#r5= hospital_rag_agent_executor.invoke({"input":"At which hospitals are patients complaining about billing and insurance issues?"})
+
+#now one where we need to help the llm find the correct answer 
+#r5= hospital_rag_agent_executor.invoke({"input":"Show me reviews written by patient 7674."})
+#r5.get("output")
+
+#now same question but re-formulated
+#r51=hospital_rag_agent_executor.invoke({"input":"Query the graph database to show me the reviews written by patient 7674."})
+
 
