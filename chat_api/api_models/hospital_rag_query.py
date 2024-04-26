@@ -9,5 +9,5 @@ class HospitalQueryInput(BaseModel):
 class HospitalQueryOutput(BaseModel):
     input: str
     output: str
-    intermediate_steps: list[str]
+    #intermediate_steps: list[str]
 
