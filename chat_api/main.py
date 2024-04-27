@@ -25,7 +25,7 @@ async def get_status():
 @app.post("/hospital-rag-agent") # changed from post to get, with post get error 405 method not allowed 
 async def query_hospital_agent(query:HospitalQueryInput) ->HospitalQueryOutput:
     query_response= await invoke_agent_with_retry(query.text)
-    #query_response["intermediate_steps"] = [str(s) for s in query_response["intermediate_steps"]]
+    query_response["intermediate_steps"] = [str(s) for s in query_response["intermediate_steps"]]
     return query_response
 
 
