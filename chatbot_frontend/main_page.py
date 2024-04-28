@@ -3,7 +3,7 @@ import requests
 import streamlit as st
 import settings as s
 
-chatbot_url = s.SETTINGS["CHATBOT_URL"]
+chatbot_url = s.SETTINGS["CHATBOT_URL"] # this might differ if we deploy as docker image and put in gcp
 
 with st.sidebar:
     st.header("About")
@@ -32,11 +32,11 @@ for message in st.session_state.messages:
             st.markdown(message["output"])
         if "explanation" in message.keys():
             with st.status("How was this generated", state="complete"):
-                st.inf(message("explanation"))
+                st.info(message["explanation"])
 
 if prompt := st.chat_input("What do you want to know?"):
     st.chat_message("user").markdown(prompt)
-    st.session_state.message.append({"role":"user", "output":prompt})
+    st.session_state.messages.append({"role":"user", "output":prompt})
 
     data={"text":prompt}
 
@@ -44,7 +44,16 @@ if prompt := st.chat_input("What do you want to know?"):
         response = requests.post(chatbot_url, json=data)
         if response.status_code==200:
             output_text=response.json()["output"]
-            explanation = response.json()
+            explanation = response.json()["intermediate_steps"]
+
+        else:
+            output_text="""An error occured while processing your message please try again or rephares your message. """
+            explanation=output_text
+
+    st.chat_message("assistant").markdown(output_text)
+    st.status("How was this generated?", state="complete").info(explanation)
+
+    st.session_state.messages.append({"role":"assistant", "output": output_text, "explanation":explanation})
         
 
 

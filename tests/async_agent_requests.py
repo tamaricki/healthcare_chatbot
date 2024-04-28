@@ -27,7 +27,7 @@ questions = [
 #"What was the total billing amount charged to each payer for 2023?",
 #"Which physician has the lowest average visit duration in days?",
 #"How much was billed for patient 789's stay?",
-#"Which physician has billed the most to cigna?"
+"Which physician has billed the most to cigna?"
 ]
 
 req_bodies = [{"text":q} for q in questions]
