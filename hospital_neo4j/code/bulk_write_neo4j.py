@@ -1,5 +1,5 @@
 
-import polars as pl
+
 import settings as s
 
 hospitals_path=s.SETTINGS["HOSPITALS_CSV_PATH"]
