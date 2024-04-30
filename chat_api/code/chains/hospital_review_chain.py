@@ -1,4 +1,4 @@
-
+#%%
 from langchain.vectorstores.neo4j_vector import Neo4jVector
 from langchain_openai import OpenAIEmbeddings
 from langchain.chains import RetrievalQA
@@ -7,11 +7,12 @@ from langchain.prompts import PromptTemplate, SystemMessagePromptTemplate, Human
 import os 
 import settings as s 
 
-
 HOSPITAL_QA_MODEL = s.SETTINGS['HOSPITAL_QA_MODEL']
 uri = s.SETTINGS['NEO4J_URI']
 uri1 = os.getenv('NEO4J_URI')
-
+#%%
+print(uri)
+#%%
 
 
 neo4j_vector_index=Neo4jVector.from_existing_graph(embedding=OpenAIEmbeddings(),

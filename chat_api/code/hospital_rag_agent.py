@@ -1,4 +1,4 @@
-
+#%%
 #chat agent needs to decide depending on the query if it will use cypher chain,  reviews chain or wait time functions. 
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_openai_functions_agent, Tool, AgentExecutor
@@ -8,9 +8,10 @@ from chains.hospital_cypher_chain import hospital_cypher_chain
 from tools.waiting_data import get_current_wait_times, get_most_available_hospital, get_waiting_time_country_procedure
 import settings as s
 HOSPITAL_AGENT_MODEL = s.SETTINGS["HOSPITAL_AGENT_MODEL"]
-
+#%%
+HOSPITAL_AGENT_MODEL
 #we could define our own prompt for the agent or we can load predefined prompt from LangChain Hub
-
+#%%
 hospital_agent_prompts=hub.pull("hwchase17/openai-functions-agent")
 
 #definition of tools which agent will use when he receives the query

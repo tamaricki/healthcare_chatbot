@@ -5,6 +5,8 @@ from typing import Union
 from dotenv import load_dotenv
 
 
+
+
 #this file is used to load all variables from .env file with help of dotenv library 
 
 def load_env_vars(root_dir: Union[str, Path]) -> dict:
@@ -28,5 +30,6 @@ ML_PIPELINE_ROOT_DIR = get_root_dir()
 
 SETTINGS = load_env_vars(root_dir=ML_PIPELINE_ROOT_DIR)
 #print(ML_PIPELINE_ROOT_DIR)
-#print(SETTINGS)
+print(SETTINGS)
+
 

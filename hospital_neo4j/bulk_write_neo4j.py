@@ -1,5 +1,4 @@
 
-
 import settings as s
 
 hospitals_path=s.SETTINGS["HOSPITALS_CSV_PATH"]
@@ -10,28 +9,17 @@ reviews_path=s.SETTINGS["REVIEWS_CSV_PATH"]
 visits_path=s.SETTINGS["VISITS_CSV_PATH"]
 
 
-#data = pl.read_csv(patients_path)
 
 
 #example of dimension table =small tables containing info about attributes that provide
 #context data in the fact tables. dimension and fact tables are part of star schema when working with
 #sql dbs
 
-#hosp = pl.read_csv(hospitals_path)
-#print(hosp.shape) #(30,3)
 
 #similarly physicians is also dimension table
 
 #physic = pl.read_csv(physicians_path)
-#print(physic.shape)
-#print(physic.sample(6))
 
-
-#oposite of dimensio are fact tables :
-#visits = pl.read_csv(visits_path)
-#print(visits.shape)
-#print(visits.sample(6))
-#print(visits.columns)
 
 #SEtup Neo4J DB graph databases Neo4j AuraDB. then move the hospital system into it and then 
 #query it 
