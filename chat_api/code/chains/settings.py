@@ -17,7 +17,7 @@ def load_env_vars(root_dir: Union[str, Path]) -> dict:
     if isinstance(root_dir, str):
         root_dir = Path(root_dir)
 
-    load_dotenv(dotenv_path=root_dir / ".env.default")
+    load_dotenv(dotenv_path=root_dir / ".env")
     load_dotenv(dotenv_path = root_dir / ".env", override=True)
 
     return dict(os.environ)

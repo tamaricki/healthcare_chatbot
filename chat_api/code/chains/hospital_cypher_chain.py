@@ -6,9 +6,8 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 import settings as s 
 
-#these are same 
-HOSPITAL_QA_MODEL = s.SETTINGS['HOSPITAL_QA_MODEL'] 
-HOSPITAL_CYPHER_MODEL=s.SETTINGS['HOSPITAL_CYPHER_MODEL']
+HOSPITAL_QA_MODEL = "gpt-3.5-turbo-0125"
+HOSPITAL_CYPHER_MODEL="gpt-3.5-turbo-0125"
 
 graph=Neo4jGraph(url=s.SETTINGS['NEO4J_URI'],username=s.SETTINGS['NEO4J_USERNAME'], password=s.SETTINGS['NEO4J_PASSWORD'])
 
