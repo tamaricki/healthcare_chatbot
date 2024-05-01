@@ -2,7 +2,7 @@
 
 import requests
 import json
-import pandas as pd
+#import pandas as pd
 import numpy as np
 from requests.exceptions import MissingSchema
 from langchain_community.graphs import Neo4jGraph

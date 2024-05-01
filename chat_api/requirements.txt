@@ -9,3 +9,6 @@ openai
 opentelemetry-api
 pydantic
 uvicorn
+python-dotenv
+requests
+
