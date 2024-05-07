@@ -5,14 +5,19 @@ services:
       context: ./chat_api
     env_file:
       - .env
+    #networks:
+     #- healthcare_chatbot_default
     ports:
       - "8000:8000"
+    
 
   chatbot_frontend:
     build:
       context: ./chatbot_frontend
     env_file:
       - .env
+    #networks:
+     #- healthcare_chatbot_default
     depends_on:
       - chatbot_api
     ports:
