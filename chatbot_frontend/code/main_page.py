@@ -3,7 +3,8 @@ import requests
 import streamlit as st
 import settings as s
 
-chatbot_url = s.SETTINGS["CHATBOT_URL"] # this might differ if we deploy as docker image and put in gcp
+chatbot_url = s.SETTINGS["CHATBOT_URL"] 
+# this might differ if we deploy as docker image and put in gcp
 
 with st.sidebar:
     st.header("About")
