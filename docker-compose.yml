@@ -1,6 +1,6 @@
 #version: '3'
 services:
-  chatbot_api:
+  chat_api:
     build:
       context: ./chat_api
     env_file:
@@ -19,7 +19,7 @@ services:
     #networks:
      #- healthcare_chatbot_default
     depends_on:
-      - chatbot_api
+      - chat_api
     ports:
       - "8501:8501"
 
