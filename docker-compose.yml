@@ -24,6 +24,5 @@ services:
     - "host.docker.internal:host-gateway"
     ports:
       - "8501:8501"
-
     
   
