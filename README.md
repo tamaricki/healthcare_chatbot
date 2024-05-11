@@ -8,7 +8,7 @@ payers without having to understand a query language like SQL, request a report 
 dashboard. Stakeholders want a single chat interface that can seamlessly answer both subjective and objective questions.
 This means, when presented with a question, chatbot needs to know what type of question is being asked and which data source to pull from. For instance, if asked How much was billed for patient 789’s stay?, your chatbot should know it needs to query a database to find the answer. If asked What have patients said about how doctors and nurses communicate with them?, chatbot should know it needs to read and summarize patient reviews.
 
-Biggest takeaway from this project is understanding how to integrate LangChain with my own data and customize chatbots. This fully functional RAG hospital chatbot is capable of fetching both, structured and unstructured data from Neo4j. 
+My biggest takeaway from this project is understanding how to integrate LangChain with my own data and customize chatbots. This fully functional RAG hospital chatbot is capable of fetching both, structured and unstructured data from Neo4j. 
 Project was made on basis of this great [Realpython tutorial](https://realpython.com/build-llm-rag-chatbot-with-langchain/). Besides steps performed, I also added 
 OECD API which gives average waiting time in days for some mediacal procedures in 17 countries. It answers questions like : What is the average waiting time for artery bypass in Portugal. Country name is optional and if left out gives average waiting time on the global level.   
 ---
@@ -28,9 +28,8 @@ Most of data is in CSV format and contains information about hospitals, physicia
 
 ## Chatbot Design
 
-![alt text](data/chatbot_dataStream.png)
-
-*taken from [Real Python](https://realpython.com/build-llm-rag-chatbot-with-langchain/)
+![Image](data/chatbot_dataStream.png)
+*taken from [Real Python](https://realpython.com/build-llm-rag-chatbot-with-langchain/)*
 
 
 
