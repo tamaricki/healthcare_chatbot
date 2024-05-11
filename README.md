@@ -1,6 +1,6 @@
 # Healthcare Chatbot
 
-This fully functional RAG hospital chatbot interfaces with LangChain agent to answer questions about actors is one hospital system. 
+This fully functional RAG hospital chatbot interfaces with LangChain agent to answer healthcare related questions.
 
 ## Task Description 
 
@@ -28,7 +28,7 @@ Most of data is in CSV format and contains information about hospitals, physicia
 
 ## Conclusion
 
-For me, there are quite some takeaways from this project: understanding how to integrate LangChain with my own data,  how retrieval augmented generation works, how to setup and move data to graph database, how to fine-tune chatbot with prompt-engineering techniques. Project was made on basis of this great [Real Python tutorial](https://realpython.com/build-llm-rag-chatbot-with-langchain/).
+For me, there are quite some takeaways from this project: understanding how to integrate LangChain with my own data,  how retrieval augmented generation works, how to setup and move data to graph database, how to fine-tune chatbot with prompt-engineering techniques. Project was made on basis of this great [Real Python tutorial](https://realpython.com/build-llm-rag-chatbot-with-langchain/) and there can be found further project details.
 
 
 
