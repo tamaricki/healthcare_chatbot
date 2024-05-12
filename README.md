@@ -9,7 +9,7 @@ This means, when presented with a question, chatbot needs to know what type of q
 
 ## Used Data
 
-Most of data is in CSV format and contains information about hospitals, physicians, patients, payers, visits and reviews. CSV files are hidden in my project repository, and are taken from [here](https://github.com/hfhoffman1144/langchain_neo4j_rag_app/tree/main/data). Besides this source, app is fetching average waiting time for some medical procedures in 17 OECD countries from [OECD Data Explorer](https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_HEALTH_PROC%40DF_WAITING&df[ag]=OECD.ELS.HD&df[vs]=1.0&pd=2010%2C&dq=..PT_PAT_WAIT_M_GT3.CM131_138...........WTSP...&ly[rw]=REF_AREA&ly[cl]=TIME_PERIOD&ly[rs]=WAITING_TIME&to[TIME_PERIOD]=false). It answers questions like : What is the average waiting time for artery bypass in Portugal? Country name is optional and if left out, gives average waiting time on the global level.
+Most of data is in CSV format and contains information about hospitals, physicians, patients, payers, visits and reviews. CSV files are hidden in my project repository, and are taken from [here](https://github.com/hfhoffman1144/langchain_neo4j_rag_app/tree/main/data). Besides this source, app is fetching average waiting time for some medical procedures in 17 OECD countries from [OECD Data Explorer](https://data-explorer.oecd.org/). It is used to answer questions like: What is the average waiting time for artery bypass in Portugal? Country name is optional and if left out, gives average waiting time on the global level.
 
 ## Tools
 
