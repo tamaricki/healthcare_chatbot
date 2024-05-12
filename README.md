@@ -28,8 +28,8 @@ Most of data is in CSV format and contains information about hospitals, physicia
 
 ## Graph Database Design
 
-Following diagram shows all nodes and relationships in the hospital system data:
-![Image](data/graph_db_design.png)*taken from [Real Python](https://realpython.com/build-llm-rag-chatbot-with-langchain/)*
+Following diagram shows all nodes and relationships in the hospital system data (*taken from [Real Python](https://realpython.com/build-llm-rag-chatbot-with-langchain/)*):
+![Image](data/graph_db_design.png)
 
 ## Conclusion
 
