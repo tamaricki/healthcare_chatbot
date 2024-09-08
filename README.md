@@ -35,5 +35,3 @@ Following diagram shows all nodes and relationships in the hospital system data 
 
 For me, there are quite some takeaways from this project: understanding how to integrate LangChain with my own data,  how retrieval augmented generation works, how to setup and move data to graph database, how to fine-tune chatbot with prompt-engineering techniques. Project was made on basis of this great [Real Python tutorial](https://realpython.com/build-llm-rag-chatbot-with-langchain/) and there you can find further project details.
 
-
-WIP
