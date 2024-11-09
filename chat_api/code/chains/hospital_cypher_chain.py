@@ -124,17 +124,4 @@ hospital_cypher_chain=GraphCypherQAChain.from_llm(cypher_llm=ChatOpenAI(model=HO
                         validate_cypher=True, top_k=100)
 
 
-#test
 
-#question = """What is the average visit duration for emergency visits in North Carolina?"""
-
-#r=hospital_cypher_chain.invoke(question)
-
-
-#q1 = """ How much was billed for patient 789's stay? """
-
-#r1= hospital_cypher_chain.invoke(q1)
-
-#q2= """ List all hospital names which we have in our records."""
-
-#r2 = hospital_cypher_chain.invoke(q2)

@@ -39,16 +39,4 @@ reviews_vector_chain=RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0),
 reviews_vector_chain.combine_documents_chain.llm_chain.prompt=review_prompt
 
 
-#testing 
-#query="""What have patients said about hospital efficiency? Mention details from specific reviews."""
-
-#response=reviews_vector_chain.invoke(query)
-
-#response.get('result')
-
-
-#q1="""What have patients said about hospital environment?"""
-
-#r1= reviews_vector_chain.invoke(q1)
-#r1.get('result')
 

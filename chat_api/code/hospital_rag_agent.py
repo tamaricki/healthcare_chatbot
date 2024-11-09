@@ -76,21 +76,6 @@ hospital_rag_agent= create_openai_functions_agent(llm=chat_model, prompt=hospita
 
 hospital_rag_agent_executor=AgentExecutor(agent=hospital_rag_agent, tools=tools, return_intermediate_steps=True, verbose=True)
 
-#test
-#r1 = hospital_rag_agent_executor.invoke({"input":"What is the wait time for Wallace-Hamilton?"})
 
-#r2=hospital_rag_agent_executor.invoke({"input":"What is current waiting time for artery bypass in Finland?"})
-
-#r3=hospital_rag_agent_executor.invoke({"input":"Which hospital has the shortest wait time?"}) #pay attention to Any input 
-
-#r4= hospital_rag_agent_executor.invoke({"input": "What's the average billing amount for emergency visits by hospital?"})
-
-
-#now one where we need to help the llm find the correct answer 
-#r5= hospital_rag_agent_executor.invoke({"input":"Show me reviews written by patient 7674."})
-#r5.get("output")
-
-#now same question but re-formulated
-#r51=hospital_rag_agent_executor.invoke({"input":"Query the graph database to show me the reviews written by patient 7674."})
 
 

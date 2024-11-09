@@ -29,8 +29,7 @@ ML_PIPELINE_ROOT_DIR = get_root_dir()
 SETTINGS = load_env_vars(root_dir=ML_PIPELINE_ROOT_DIR)
 
 
-#print(ML_PIPELINE_ROOT_DIR)
-#print(SETTINGS)
+
 
 
 

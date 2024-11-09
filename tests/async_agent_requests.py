@@ -21,12 +21,12 @@ async def make_bulk_requests(url, data):
 
 questions = [
     "What is the current wait time for hip replacement in Chile?",
-#"Which hospital has the shortest wait time?",
-#"At which hospitals are patients complaining about billing and insurance issues?",
-#"What are patients saying about the nursing staff at Castaneda-Hardy?",
-#"What was the total billing amount charged to each payer for 2023?",
-#"Which physician has the lowest average visit duration in days?",
-#"How much was billed for patient 789's stay?",
+"Which hospital has the shortest wait time?",
+"At which hospitals are patients complaining about billing and insurance issues?",
+"What are patients saying about the nursing staff at Castaneda-Hardy?",
+"What was the total billing amount charged to each payer for 2023?",
+"Which physician has the lowest average visit duration in days?",
+"How much was billed for patient 789's stay?",
 "Which physician has billed the most to cigna?"
 ]
 

@@ -16,12 +16,7 @@ from typing import Any
 # from specialist assessment to treatment. Data used is from period between 2018 and 2022
 #url_no_country= 'https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/.WAIT_MEAN.............WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'
 
-#below example for Denmark only, average waiting time, only for hip replacement procedure, 
-# for data starting from 2018, and with json data format
-#url_dnk='https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/DNK.WAIT_MEAN..CM8151_8153...........WTSP...?format=jsondata&startPeriod=2018&dimensionAtObservation=AllDimensions'
 
-#to add countries (estonia, denmark example,startPeriod=2018)
-#https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_HEALTH_PROC@DF_WAITING,1.0/EST+DNK.WAIT_MEAN.............WTSP...?dimensionAtObservation=AllDimensions
 
 
 
@@ -115,12 +110,4 @@ def get_most_available_hospital(_:Any) -> dict[str, float]:
 
     return {best_hospital: best_wait_time}
 
-#test
-#get_current_wait_times('fake hospital')
-
-
-
-#get_waiting_time_country_procedure('knee replacement', 'poland')
-
-#get_most_available_hospital()
 
